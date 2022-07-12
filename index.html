@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
+</head>
+<style>
+    .container {
+        width: 400px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    h1,
+    label {
+        font-family: "Bebas Neue", display;
+    }
+
+    h1 {
+        font-size: 50px;
+    }
+
+    label {
+        display: block;
+        font-size: 30px;
+    }
+
+    input[type=text],
+    button {
+        font-family: Nunito, sans-serif;
+    }
+
+    input[type=text] {
+        margin-bottom: 20px;
+        padding: 5px 16px;
+        max-width: 60px;
+        font-size: 22px;
+        border: 3px solid #ccc;
+        border-radius: 4px;
+        margin-top: 6px;
+    }
+
+    button {
+        display: block;
+        font-size: 25px;
+        padding: 8px 40px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        background: #5588ff;
+        color: #fff;
+        margin: 10px auto 0;
+    }
+
+    button:hover,
+    button:focus {
+        background: #2266ff;
+        cursor: pointer;
+    }
+
+    p {
+        font-size: 20px;
+        padding: 20px;
+        background: #ccc;
+        border-radius: 6px;
+        font-family: Nunito;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <h1>Calculadora Horas Asana</h1>
+        60 Minutos = 1,00
+        <br>
+        <br>
+        <br>
+        <input type="text" id="second" maxlength="5"> = ? Hora(s)
+        <button id="calculate" onclick="calculatePercentage()">Calcular</button>
+        <p id="result"></p>
+        <img src="https://cdn.dicionariopopular.com/imagens/nazareconfusamatematica.gif" alt="">
+    </div>
+    <script>
+
+        const converter = (minutos) => {
+            const horas = Math.floor(minutos / 60);
+            const min = minutos % 60;
+            const textoHoras = (`00${horas}`).slice(-2);
+            const textoMinutos = (`00${min}`).slice(-2);
+
+            return `${textoHoras}:${textoMinutos}`;
+        };
+
+
+        var audio = new Audio('https://www.myinstants.com/media/sounds/cavalo-rodrigo-faro.mp3')
+        function horaParaMinuto(data) {
+            var timeParts = data.split(":");
+            return Number(timeParts[0]) * 60 + Number(timeParts[1]);
+        }
+        var calculate = document.getElementById("calculate");
+        var result = document.getElementById("result");
+        $('#second').maskMoney({ decimal: ':', precision: 2 });
+        function calculatePercentage() {
+            var hora = parseFloat(1.00)
+            var minutos = horaParaMinuto((document.getElementById("second").value))
+            var resultado = hora * minutos / 60;
+            var inverter = Math.round(60 * resultado.toFixed(2))
+            result.innerHTML = "O calculo de " + resultado.toFixed(2) + " hora, que resulta em: " + converter(inverter) + ".";
+            audio.play();
+        }
+
+        calculate.addEventListener('click', calculatePercentage);
+    </script>
+</body>
+
+</html>
